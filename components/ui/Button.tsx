@@ -1,7 +1,6 @@
 "use client";
 
 import { forwardRef } from "react";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export interface ButtonProps
@@ -27,11 +26,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const base =
-      "inline-flex items-center justify-center font-medium rounded-xl transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
+      "inline-flex items-center justify-center font-medium rounded-xl transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-[1.01] active:scale-[0.98]";
 
     const variants = {
       primary:
-        "bg-foreground text-background hover:bg-foreground/90 shadow-soft active:scale-[0.98]",
+        "bg-foreground text-background hover:bg-foreground/90 shadow-soft",
       secondary:
         "bg-muted text-foreground hover:bg-muted/80 border border-border",
       ghost: "hover:bg-muted/60 text-foreground",
@@ -45,15 +44,12 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       lg: "h-12 px-8 text-base",
     };
 
-    const Comp = motion.button;
-
     return (
-      <Comp
+      <button
         ref={ref}
+        type="button"
         className={cn(base, variants[variant], sizes[size], className)}
         disabled={disabled || isLoading}
-        whileHover={{ scale: 1.01 }}
-        whileTap={{ scale: 0.98 }}
         {...props}
       >
         {isLoading ? (
@@ -64,7 +60,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ) : (
           children
         )}
-      </Comp>
+      </button>
     );
   }
 );
