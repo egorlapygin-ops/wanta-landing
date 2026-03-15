@@ -4,7 +4,7 @@ import { scrollToSection } from "@/lib/utils";
 import { landingContent } from "@/content/landingContent";
 
 export function Footer() {
-  const { logo, tagline, links, copyright } = landingContent.footer;
+  const { logo, tagline, links, copyright, credits } = landingContent.footer;
 
   return (
     <footer className="bg-muted/30 border-t border-border">
@@ -36,6 +36,7 @@ export function Footer() {
         </div>
         <div className="mt-10 pt-8 border-t border-border">
           <p className="text-sm text-muted-foreground">{copyright}</p>
+          <p className="mt-1 text-sm text-muted-foreground">{credits}</p>
         </div>
       </div>
     </footer>
