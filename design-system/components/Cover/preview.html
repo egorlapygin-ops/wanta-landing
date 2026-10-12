@@ -1,0 +1,56 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Wanta Web</title>
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--paper); color:var(--ink); font-family:var(--font-display); overflow:hidden; }
+  .cover { position:relative; height:288px; overflow:hidden; }
+  .art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
+  .art svg { display:block; width:480px; height:288px; }
+  .print { fill:var(--dusk-print); }
+  .shadow { fill:var(--dusk-shadow); }
+  .glow { fill:var(--dusk-glow); }
+  .place { fill:var(--coral); }
+  .ring { fill:none; stroke:var(--coral); stroke-width:1.5; }
+  .blk { rx:var(--radius-l); }
+  .pill { rx:24px; }
+  .route { fill:none; stroke:var(--dusk-glow); stroke-width:2; stroke-dasharray:0 8; stroke-linecap:round; }
+  .words { position:absolute; left:var(--space-8); bottom:var(--space-8); max-width:440px; }
+  .name { margin:0; font-size:56px; line-height:.95; font-weight:500; letter-spacing:-.02em; color:var(--ink); }
+  .tag { margin:var(--space-3) 0 0 2px; font-size:14px; line-height:20px; color:var(--ink-muted); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      dusk-print 208×256 slab bled off the top, radius-l · dusk-shadow 256×192 bled off the right, radius-l · dusk-glow 96×48 pill (rx = half its height) · coral only as pins — ≈37% of 960×288
+  arrangement one tall print slab with a shadow block stepping right and down, like a plate beside the text column; space-4 gutter
+  pattern     literal motif, "coral means a saved place, the page is a route": seven round pins (space-6/space-8 across) joined by one dotted route in dusk-glow at an 8px pitch; the focused pin gets a coral ring
+  scales      sides multiples of space-2; gutter space-4; pins space-4 to space-8; corners radius-l, the strip radius-pill
+-->
+<rect class="print blk" x="16" y="-32" width="208" height="272"/>
+<rect class="glow pill" x="240" y="-16" width="96" height="48"/>
+<rect class="shadow blk" x="240" y="48" width="272" height="192"/>
+<path class="route" d="M64 56 C 120 60, 110 120, 148 116 S 90 190, 80 184 M 304 112 C 360 112, 380 150, 412 156 S 360 200, 348 204"/>
+<circle class="place" cx="64" cy="56" r="16"/>
+<circle class="ring" cx="64" cy="56" r="22"/>
+<circle class="place" cx="148" cy="116" r="12"/>
+<circle class="place" cx="80" cy="184" r="16"/>
+<circle class="place" cx="304" cy="112" r="16"/>
+<circle class="place" cx="412" cy="156" r="12"/>
+<circle class="place" cx="348" cy="204" r="12"/>
+<circle class="place" cx="208" cy="264" r="8"/>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">Wanta Web</h1>
+<p class="tag">Город сверху, сохранённые места — коралловым.</p>
+</div>
+</div>
+</body>
+</html>

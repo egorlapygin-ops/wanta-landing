@@ -1,0 +1,11 @@
+<!-- @dsCard group="Действия" height=96 -->
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Button</title>
+<style>#root{display:flex;flex-wrap:wrap;gap:12px;padding:24px}</style></head>
+<body><div id="root"></div>
+<script>
+var W = window.Wanta, h = React.createElement;
+ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+  h(W.Button, { variant: 'primary', href: '#' }, 'Скачать Wanta'),
+  h(W.Button, { variant: 'secondary', href: '#', external: true }, 'Для заведений')));
+</script></body></html>

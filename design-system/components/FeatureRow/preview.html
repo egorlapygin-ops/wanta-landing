@@ -1,0 +1,14 @@
+<!-- @dsCard group="Контент" height=560 subtitle="Раздел «Что мы делаем»" -->
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>FeatureRow</title>
+<style>#root{padding:32px 24px}h2{margin:0 0 48px;font:500 30px/38px var(--font-display);letter-spacing:-.015em}</style></head>
+<body><div id="root"></div>
+<script>
+var W = window.Wanta, h = React.createElement;
+ReactDOM.createRoot(document.getElementById('root')).render(h('section', null,
+  h('h2', null, 'Что мы делаем'),
+  h('div', { className: 'wn-features' },
+    h(W.FeatureRow, { glyph: 'save', title: 'Сохраняете одним жестом' }, 'Поделитесь рилсом из Instagram или TikTok, и Wanta сама найдёт в нём место: название, адрес, часы работы. Никаких скриншотов и заметок.'),
+    h(W.FeatureRow, { glyph: 'near', title: 'Напоминаем, когда вы рядом' }, 'Пуш приходит по времени и месту: вечер пятницы, вы в двух кварталах от бара, который сохранили в марте.'),
+    h(W.FeatureRow, { glyph: 'act', title: 'Один тап до действия' }, 'Маршрут, бронь или билет открываются прямо из карточки места. Сохранённое превращается в поход.'))));
+</script></body></html>
