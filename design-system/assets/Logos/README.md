@@ -1,0 +1,1 @@
+Слово WANTA в кривых, собрано из SK Pupok Solid с трекингом 0.75em, как в Figma. `wanta-wordmark-ink.svg` — цвет `ink` (#0A0C10) для светлых фонов; `wanta-wordmark-paper.svg` — белый для `dusk-print`, `dusk-shadow` и тёмной темы. Охранное поле — высота буквы со всех сторон.

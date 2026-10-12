@@ -1,0 +1,10 @@
+<!-- @dsCard group="Навигация" height=96 subtitle="Человек / Агент" -->
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>FormatSwitch</title>
+<style>#root{display:flex;flex-wrap:wrap;gap:24px;padding:24px}</style></head>
+<body><div id="root"></div>
+<script>
+var W = window.Wanta, h = React.createElement;
+function Demo() { var s = React.useState('human'); return h(W.FormatSwitch, { value: s[0], onChange: s[1] }); }
+ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null, h(Demo), h(W.FormatSwitch, { value: 'agent' })));
+</script></body></html>

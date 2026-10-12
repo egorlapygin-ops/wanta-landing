@@ -1,44 +1,19 @@
-# Wanta — лендинг
+# Wanta — сайт
 
-Лендинг продукта, который превращает сохранённый контент в систему будущих действий.
+Статический сайт Wanta на дизайн-системе Wanta Web. Сборки нет: Vercel отдаёт файлы как есть (`vercel.json`, `framework: null`).
 
-## Стек
+| Путь | Что это |
+|---|---|
+| `index.html` | Главная: миссия, интент-слой для ИИ-агентов, Telegram-бот, схема «Рисунок 1» |
+| `index.md`, `llms.txt` | Версия для агентов: главная в Markdown и выжимка о Wanta |
+| `lab/` | Лаборатория: эксперименты (`lab/data.js`), лабораторные заметки и эссе |
+| `assets/` | Общие компоненты (`bundle.js`, React 18 с cdnjs), стили (`bundle.css`), шрифт логотипа |
+| `design-system/` | Исходники дизайн-системы: токены, брендбук, компоненты с превью, логотипы |
 
-- Next.js 14+
-- TypeScript
-- Tailwind CSS
-- Framer Motion
-- Lucide React
-
-## Запуск
-
-```bash
-npm install
-npm run dev
-```
-
-Откройте [http://localhost:3000](http://localhost:3000).
-
-## Сборка
+Локально:
 
 ```bash
-npm run build
-npm start
+python3 -m http.server 8765
 ```
 
-## Структура
-
-- `app/` — страницы и layout
-- `components/layout/` — Header, Footer, Section
-- `components/ui/` — Button, Badge, Input
-- `components/sections/` — секции лендинга
-- `content/landingContent.ts` — все тексты (удобно менять без правки компонентов)
-- `app/api/waitlist/` — API для waitlist (TODO: подключить Supabase/Airtable/и т.д.)
-
-## Waitlist
-
-Форма отправляет POST на `/api/waitlist` с полями `email` и `category`. В `app/api/waitlist/route.ts` есть TODO для интеграции с вашим бэкендом.
-
-## Favicon
-
-Добавьте `public/favicon.ico` для иконки во вкладке.
+и открыть http://localhost:8765/.
