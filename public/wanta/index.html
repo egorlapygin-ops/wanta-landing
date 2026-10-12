@@ -69,56 +69,66 @@ p b { color: var(--ink); font-weight: 500; }
 .outcome span { font: 400 14px/20px var(--font-body); color: var(--ink-muted); }
 .intent-note { display: flex; flex-direction: column; gap: var(--space-4); padding-top: var(--space-2); }
 
-/* Figure 1: how a save flows through Wanta */
+/* Figure 1: how a save flows through Wanta.
+   Geometry: both core visuals are exactly 96px tall, so the inner wire sits at 47px; outer wires are centred on the board row. */
 .fig { margin-top: var(--space-16); }
-.fig-board { position: relative; border-radius: var(--radius-l); padding: 32px 28px; background-color: var(--surface); background-image: radial-gradient(circle, var(--line) 1.2px, transparent 1.4px); background-size: 20px 20px; display: grid; grid-template-columns: max-content 72px minmax(0, 1fr) 88px 188px; align-items: center; }
-.fig-label { font: 600 13px/18px var(--font-body); color: var(--ink-muted); }
-.fig-sources { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
-.fig-sources span.src2 { padding: 7px 14px; border-radius: var(--radius-pill); background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); font: 500 14px/20px var(--font-body); color: var(--ink); }
+.fig-board { border-radius: var(--radius-l); padding: 32px 28px; background-color: var(--surface); background-image: radial-gradient(circle, var(--line) 1.2px, transparent 1.4px); background-size: 20px 20px; display: grid; grid-template-columns: 104px minmax(40px, 1fr) 368px minmax(40px, 1fr) 176px; align-items: start; }
+.fig-label { display: block; font: 600 13px/18px var(--font-body); color: var(--ink-muted); margin-bottom: 10px; }
+.fig-col { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+.fig-sources { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.fig-sources span { padding: 6px 12px; border-radius: var(--radius-pill); background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); font: 500 13px/18px var(--font-body); color: var(--ink); white-space: nowrap; }
 .wire { position: relative; height: 2px; background: radial-gradient(circle, var(--ink-faint) 0 1px, transparent 1.2px) 0 0 / 6px 2px repeat-x; }
-.wire::before { content: ""; position: absolute; right: -4px; top: -4px; width: 10px; height: 10px; box-sizing: border-box; border-radius: var(--radius-pill); border: 2px solid var(--dusk); background: var(--paper); }
-.wire i { position: absolute; top: -3px; left: 0; width: 8px; height: 8px; border-radius: var(--radius-pill); background: var(--dusk); animation: travel 2.6s cubic-bezier(.5,0,.5,1) infinite; }
+.wire::before, .wire::after { content: ""; position: absolute; top: -4px; width: 10px; height: 10px; box-sizing: border-box; border-radius: var(--radius-pill); border: 2px solid var(--dusk); background: var(--paper); }
+.wire::before { left: -2px; } .wire::after { right: -2px; }
+.wire i { position: absolute; top: -3px; left: 0; width: 8px; height: 8px; border-radius: var(--radius-pill); background: var(--dusk); animation: travel 2.6s cubic-bezier(.5,0,.5,1) infinite; z-index: 1; }
 .wire.inner i { background: var(--coral); animation-delay: .9s; }
-.wire em { position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); width: max-content; max-width: 84px; text-align: center; font: 500 12px/15px var(--font-body); font-style: normal; color: var(--ink-muted); }
+.wire em { position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); white-space: nowrap; font: 500 12px/15px var(--font-body); font-style: normal; color: var(--ink-muted); }
 @keyframes travel { 0% { left: 0; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { left: calc(100% - 8px); opacity: 0; } }
-.fig-core { position: relative; border-radius: 26px; background: var(--paper); box-shadow: inset 0 0 0 1.5px var(--ink-faint); padding: 34px 20px 20px; display: flex; flex-direction: column; gap: 16px; }
+.fig-core { position: relative; border-radius: 26px; background: var(--paper); box-shadow: inset 0 0 0 1.5px var(--ink-faint); padding: 36px 20px 20px; display: flex; flex-direction: column; gap: 20px; }
 .fig-core-tag { position: absolute; top: -14px; left: 20px; display: inline-flex; align-items: center; gap: 10px; height: 28px; padding: 0 12px; border-radius: var(--radius-pill); background: var(--paper); box-shadow: inset 0 0 0 1.5px var(--ink-faint); }
-.fig-core-tag span { font: 600 12px/16px var(--font-body); color: var(--ink-muted); }
-.fig-core-row { display: grid; grid-template-columns: auto 56px minmax(0, 1fr); align-items: center; }
-.fig-node { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
-.fig-node .wn-glyph { width: 96px !important; height: 96px !important; border-radius: 22px; }
+.fig-core-tag span { font: 600 12px/16px var(--font-body); color: var(--ink-muted); white-space: nowrap; }
+.fig-core-row { display: grid; grid-template-columns: 96px minmax(56px, 1fr) 176px; align-items: start; }
+.fig-core-row > .wire { margin-top: 47px; }
+/* outer wires sit on the same line as the core visuals: core padding-top 36 + half of 96 */
+.fig-board > .wire { margin-top: 83px; }
+.fig-board > .fig-col { padding-top: 14px; }
+.fig-node { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.fig-node .wn-glyph { width: 96px !important; height: 96px !important; border-radius: 22px; margin-bottom: 8px; }
 .fig-node b { font: 600 14px/18px var(--font-body); color: var(--ink); }
 .fig-node small { font: 500 12px/16px var(--font-body); color: var(--ink-muted); }
-.fig-store { display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: 20px; background: var(--surface); }
-.fig-store span.it { display: flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 14px; background: var(--paper); font: 500 13px/18px var(--font-body); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.fig-store span.it i { width: 7px; height: 7px; border-radius: var(--radius-pill); background: var(--dusk); flex: none; }
-.fig-store span.it.place i { background: var(--coral); }
-.fig-ctx { border-radius: 16px; border: 1.5px dashed var(--ink-faint); padding: 10px 14px; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+.fig-store { height: 96px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 6px; border-radius: 20px; background: var(--surface); margin-bottom: 8px; }
+.fig-store span { display: flex; align-items: center; gap: 8px; height: 26px; padding: 0 10px; border-radius: 13px; background: var(--paper); font: 500 12px/16px var(--font-body); color: var(--ink); white-space: nowrap; }
+.fig-store span i { width: 7px; height: 7px; border-radius: var(--radius-pill); background: var(--dusk); flex: none; }
+.fig-store span.place i { background: var(--coral); }
+.fig-ctx { border-radius: 16px; border: 1.5px dashed var(--ink-faint); padding: 10px 14px; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; }
 .fig-ctx b { font: 600 12px/16px var(--font-body); color: var(--dusk); }
 .fig-ctx span { font: 500 12px/16px var(--font-body); color: var(--ink-muted); }
-.fig-actors { display: flex; flex-direction: column; gap: 8px; align-items: stretch; }
+.fig-actors { display: flex; flex-direction: column; gap: 6px; width: 100%; }
 .fig-actor { display: flex; flex-direction: row; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 18px; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); }
-.fig-actor .ic { width: 36px; height: 36px; border-radius: 12px; background: var(--surface); display: grid; place-items: center; color: var(--ink); flex: none; }
+.fig-actor .ic { width: 34px; height: 34px; border-radius: 11px; background: var(--surface); display: grid; place-items: center; color: var(--ink); flex: none; }
 .fig-actor.is-agent .ic { background: var(--dusk-print); color: var(--print-white); }
 .fig-actor > div { flex: 1; min-width: 0; }
 .fig-actor b { display: block; font: 600 14px/18px var(--font-body); color: var(--ink); }
 .fig-actor small { display: block; font: 500 12px/16px var(--font-body); color: var(--ink-muted); }
-.fig-or { align-self: center; font: 500 12px/16px var(--font-body); color: var(--ink-faint); }
+.fig-or { text-align: center; font: 500 12px/16px var(--font-body); color: var(--ink-faint); }
 .fig figcaption { margin-top: 12px; font: 400 15px/23px var(--font-body); color: var(--ink-muted); max-width: 760px; }
 .fig figcaption b { color: var(--ink); font-weight: 600; }
-@media (max-width: 1280px) and (min-width: 1101px), (max-width: 980px) {
-  .fig-board { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 28px 20px; }
-  .fig-board > .wire { width: 2px; height: 48px; justify-self: center; background: radial-gradient(circle, var(--ink-faint) 0 1px, transparent 1.2px) 0 0 / 2px 6px repeat-y; margin: 8px 0; }
-  .fig-board > .wire::before { right: -4px; top: auto; bottom: -4px; }
+/* Too narrow for one row: stack the board, wires turn vertical. */
+@media (max-width: 1250px) and (min-width: 1101px), (max-width: 940px) {
+  .fig-board { grid-template-columns: minmax(0, 1fr); justify-items: center; padding: 28px 20px; }
+  .fig-board > .wire { width: 2px; height: 44px; margin: 10px 0 !important; background: radial-gradient(circle, var(--ink-faint) 0 1px, transparent 1.2px) 0 0 / 2px 6px repeat-y; }
+  .fig-board > .wire::before { left: -4px; top: -2px; } .fig-board > .wire::after { left: -4px; right: auto; top: auto; bottom: -2px; }
   .fig-board > .wire i { left: -3px; animation-name: travelY; }
-  .fig-board > .wire em { left: 16px; bottom: auto; top: 50%; transform: translateY(-50%); }
-  .fig-sources { flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center; }
-  .fig-sources .fig-label { width: 100%; text-align: center; }
+  .fig-col { align-items: center; padding-top: 0 !important; }
+  .fig-sources { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+  .fig-core { width: 100%; max-width: 420px; box-sizing: border-box; }
+  .fig-actors { max-width: 420px; }
 }
 @keyframes travelY { 0% { top: 0; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { top: calc(100% - 8px); opacity: 0; } }
-@media (max-width: 560px) {
-  .fig-core-row { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+@media (max-width: 480px) {
+  .fig-core-row { grid-template-columns: minmax(0, 1fr); gap: 16px; }
   .fig-core-row > .wire { display: none; }
+  .fig-store { height: auto; }
 }
 @media (prefers-reduced-motion: reduce) { .wire i { animation: none; display: none; } }
 
@@ -302,27 +312,29 @@ footer small { font: 500 13px/18px var(--font-body); color: var(--ink-faint); }
   function Figure() {
     return h("figure", { className: "fig", role: "group", "aria-label": "Схема: как сохранёнка проходит через Wanta" },
       h("div", { className: "fig-board" },
-        h("div", { className: "fig-sources" },
+        h("div", { className: "fig-col" },
           h("span", { className: "fig-label" }, "Сохранёнки"),
-          ["Instagram", "TikTok", "YouTube", "Pinterest", "VK"].map(function (n) { return h("span", { key: n, className: "src2" }, n); })),
-        h(Wire, { label: "ролик" }),
+          h("div", { className: "fig-sources" }, ["Instagram", "TikTok", "YouTube", "Pinterest", "VK"].map(function (n) { return h("span", { key: n }, n); }))),
+        h(Wire, {}),
         h("div", { className: "fig-core" },
           h("div", { className: "fig-core-tag" }, h(W.Wordmark, { scale: 1 }), h("span", null, "слой намерений")),
           h("div", { className: "fig-core-row" },
-            h("div", { className: "fig-node" }, h(W.Glyph, { kind: "save", size: 96, alt: "" }), h("b", null, "Распознавание"), h("small", null, "кадры · подпись · голос")),
+            h("div", { className: "fig-node" }, h(W.Glyph, { kind: "save", size: 96, alt: "" }), h("b", null, "Распознавание"), h("small", null, "кадры, подпись, голос")),
             h(Wire, { inner: true, label: "объект" }),
-            h("div", { className: "fig-node", style: { minWidth: 0, alignItems: "stretch" } },
+            h("div", { className: "fig-node" },
               h("div", { className: "fig-store" },
-                h("span", { className: "it place" }, h("i"), "Место · бар, пт"),
-                h("span", { className: "it" }, h("i"), "Вещь · шопер"),
-                h("span", { className: "it" }, h("i"), "Рецепт · рамен")),
-              h("b", null, "Намерения"), h("small", null, "что · где · когда · какой шаг"))),
+                h("span", { className: "place" }, h("i"), "Место · бар, пт 20:00"),
+                h("span", null, h("i"), "Вещь · шопер, −18%"),
+                h("span", null, h("i"), "Рецепт · рамен, сб")),
+              h("b", null, "Намерения"), h("small", null, "что, где, когда, какой шаг"))),
           h("div", { className: "fig-ctx" }, h("b", null, "Контекст"), ["где ты", "день и время", "цена", "свободен ли вечер"].map(function (c) { return h("span", { key: c }, c); }))),
-        h(Wire, { label: "в момент решения" }),
-        h("div", { className: "fig-actors" },
-          h("div", { className: "fig-actor" }, h("span", { className: "ic" }, h(Icon, { kind: "me" })), h("div", null, h("b", null, "Ты"), h("small", null, "пуш и один тап"))),
-          h("span", { className: "fig-or" }, "или"),
-          h("div", { className: "fig-actor is-agent" }, h("span", { className: "ic" }, h(Icon, { kind: "agent" })), h("div", null, h("b", null, "ИИ-агент"), h("small", null, "бронирует, покупает, включает"))))),
+        h(Wire, {}),
+        h("div", { className: "fig-col" },
+          h("span", { className: "fig-label" }, "В момент решения"),
+          h("div", { className: "fig-actors" },
+            h("div", { className: "fig-actor" }, h("span", { className: "ic" }, h(Icon, { kind: "me" })), h("div", null, h("b", null, "Ты"), h("small", null, "пуш и один тап"))),
+            h("span", { className: "fig-or" }, "или"),
+            h("div", { className: "fig-actor is-agent" }, h("span", { className: "ic" }, h(Icon, { kind: "agent" })), h("div", null, h("b", null, "ИИ-агент"), h("small", null, "бронирует и покупает")))))),
       h("figcaption", null, h("b", null, "Рисунок 1. "), "Сохранёнка входит в Wanta: распознаём объект, собираем намерение с контекстом и возвращаем его в момент решения — тебе или твоему ИИ-агенту."));
   }
 
