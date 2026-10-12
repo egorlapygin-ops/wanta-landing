@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="../assets/bundle.css">
 <style>
 /* Layout: sticky 240px route-nav + one column. Index = counters, principles, essays, a dense grid of experiment "specimens". Detail = lab note or essay. */
-:root{--paper:#ffffff;--surface:#f0f2f9;--line:#e1e4ee;--ink:#0a0c10;--ink-muted:#5b6070;--ink-faint:#8a90a0;--dusk:#3a2bd8;--on-dusk:#ffffff;--dusk-tint:#ecebfd;--dusk-print:#3a2bd8;--dusk-shadow:#17126b;--dusk-glow:#a39dff;--print-white:#ffffff;--coral:#f1654c;--blush:#fabfd9;--pill-glass:rgba(255,255,255,0.5);--pill-divider:rgba(0,0,0,0.16);--focus:var(--dusk);--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-6:24px;--space-8:32px;--space-12:48px;--space-16:64px;--space-24:96px;--radius-s:12px;--radius-m:20px;--radius-l:28px;--radius-pill:999px;--nav-width:240px;--text-max:640px;--plate-max:880px;--glyph-size:128px;--shadow-avatar:0 2px 6px rgba(0,0,0,0.2);--font-display:"Unbounded", "Arial Rounded MT Bold", "Helvetica Neue", sans-serif;--font-body:"Golos Text", "Helvetica Neue", Arial, sans-serif;--font-logo:"SK Pupok Solid", "Unbounded", sans-serif}
+:root{--paper:#ffffff;--surface:#f0f2f9;--line:#e1e4ee;--ink:#0a0c10;--ink-muted:#5b6070;--ink-faint:#8a90a0;--dusk:#3a2bd8;--on-dusk:#ffffff;--dusk-tint:#ecebfd;--dusk-print:#3a2bd8;--dusk-shadow:#17126b;--dusk-glow:#a39dff;--print-white:#ffffff;--coral:#f1654c;--blush:#fabfd9;--pill-glass:rgba(255,255,255,0.5);--pill-divider:rgba(0,0,0,0.16);--focus:var(--dusk);--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-6:24px;--space-8:32px;--space-12:48px;--space-16:64px;--space-24:96px;--radius-s:6px;--radius-m:10px;--radius-l:14px;--radius-pill:999px;--nav-width:240px;--text-max:640px;--plate-max:880px;--glyph-size:128px;--shadow-avatar:0 2px 6px rgba(0,0,0,0.2);--font-display:"Unbounded", "Arial Rounded MT Bold", "Helvetica Neue", sans-serif;--font-body:"Golos Text", "Helvetica Neue", Arial, sans-serif;--font-logo:"SK Pupok Solid", "Unbounded", sans-serif}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#0a0c10;--surface:#14171e;--line:#252a35;--ink:#eceef5;--ink-muted:#9aa0b0;--ink-faint:#5d6372;--dusk:#8f87ff;--on-dusk:#0a0c10;--dusk-tint:#1c1a3d;--pill-glass:rgba(255,255,255,0.08);--pill-divider:rgba(255,255,255,0.2);color-scheme:dark}}
 :root[data-theme="dark"]{--paper:#0a0c10;--surface:#14171e;--line:#252a35;--ink:#eceef5;--ink-muted:#9aa0b0;--ink-faint:#5d6372;--dusk:#8f87ff;--on-dusk:#0a0c10;--dusk-tint:#1c1a3d;--pill-glass:rgba(255,255,255,0.08);--pill-divider:rgba(255,255,255,0.2);color-scheme:dark}
 
@@ -34,7 +34,7 @@ section.block { padding-top: var(--space-16); scroll-margin-top: 24px; }
 /* Header with counters */
 .head { display: flex; flex-direction: column; gap: var(--space-4); }
 .counters { margin-top: var(--space-8); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-.counter { padding: 18px 20px; border-radius: 24px; background: var(--surface); display: flex; flex-direction: column; gap: 4px; }
+.counter { padding: 18px 20px; border-radius: 12px; background: var(--surface); display: flex; flex-direction: column; gap: 4px; }
 .counter b { font: 500 44px/48px var(--font-display); letter-spacing: -.03em; color: var(--ink); font-variant-numeric: tabular-nums; }
 .counter span { font: 500 14px/20px var(--font-body); color: var(--ink-muted); }
 .counter.accent { background: var(--dusk-print); }
@@ -42,13 +42,13 @@ section.block { padding-top: var(--space-16); scroll-margin-top: 24px; }
 
 /* Principles */
 .principles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-.principle { padding: 18px 20px; border-radius: 24px; box-shadow: inset 0 0 0 1px var(--line); display: flex; flex-direction: column; gap: 8px; }
+.principle { padding: 18px 20px; border-radius: 12px; box-shadow: inset 0 0 0 1px var(--line); display: flex; flex-direction: column; gap: 8px; }
 .principle b { font: 500 20px/26px var(--font-display); color: var(--dusk); letter-spacing: -.01em; }
 .principle span { font: 400 15px/22px var(--font-body); color: var(--ink-muted); }
 
 /* Essays */
 .essays { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.essay-card { display: grid; grid-template-rows: auto 1fr; border-radius: 28px; overflow: hidden; background: var(--surface); text-decoration: none; color: inherit; }
+.essay-card { display: grid; grid-template-rows: auto 1fr; border-radius: 14px; overflow: hidden; background: var(--surface); text-decoration: none; color: inherit; }
 .essay-card .wn-plate canvas { border-radius: 0; }
 .essay-card .wn-plate figcaption { display: none; }
 .essay-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 10px; }
@@ -67,12 +67,12 @@ a:hover .go i { transform: translateX(3px); }
 
 /* Experiment grid */
 .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-flow: dense; gap: 16px; margin-top: var(--space-6); }
-.exp { display: flex; flex-direction: column; border-radius: 28px; background: var(--surface); text-decoration: none; color: inherit; overflow: hidden; min-width: 0; transition: transform .25s cubic-bezier(.2,.8,.2,1); }
+.exp { display: flex; flex-direction: column; border-radius: 14px; background: var(--surface); text-decoration: none; color: inherit; overflow: hidden; min-width: 0; transition: transform .25s cubic-bezier(.2,.8,.2,1); }
 .exp:hover { transform: translateY(-3px); }
 .exp.wide { grid-column: span 2; }
 .exp-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 16px 18px 0; font: 500 13px/18px var(--font-body); color: var(--ink-muted); }
 .exp-no { font-variant-numeric: tabular-nums; }
-.spec { margin: 12px 12px 0; border-radius: 20px; background: var(--paper); min-height: 172px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; position: relative; overflow: hidden; }
+.spec { margin: 12px 12px 0; border-radius: 10px; background: var(--paper); min-height: 172px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; position: relative; overflow: hidden; }
 .spec-big { font: 500 38px/42px var(--font-display); letter-spacing: -.03em; color: var(--ink); font-variant-numeric: tabular-nums; }
 .spec-cap { font: 500 13px/18px var(--font-body); color: var(--ink-muted); }
 .spec ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
@@ -92,13 +92,13 @@ a:hover .go i { transform: translateX(3px); }
 .split { height: 22px; border-radius: var(--radius-pill); overflow: hidden; display: flex; background: var(--line); }
 .split i { background: var(--dusk); }
 .spec.media { padding: 0; min-height: 0; background: transparent; }
-.spec.media .wn-plate canvas { border-radius: 20px; aspect-ratio: 16 / 9; }
+.spec.media .wn-plate canvas { border-radius: 10px; aspect-ratio: 16 / 9; }
 .spec.media .wn-plate figcaption { display: none; }
 .spec-over { position: absolute; left: 14px; bottom: 14px; right: 14px; display: flex; flex-direction: column; gap: 2px; }
 .spec-over .spec-big { color: var(--print-white); }
 .spec-over .spec-cap { color: var(--print-white); opacity: .85; }
 .spec.glyphy { flex-direction: row; align-items: center; justify-content: flex-start; gap: 16px; }
-.spec.glyphy .wn-glyph { width: 96px !important; height: 96px !important; border-radius: 18px; }
+.spec.glyphy .wn-glyph { width: 96px !important; height: 96px !important; border-radius: 9px; }
 .exp-body { padding: 14px 18px 0; display: flex; flex-direction: column; gap: 6px; }
 .exp h3 { font-size: 17px; line-height: 24px; letter-spacing: -.005em; transition: color .2s; }
 .exp:hover h3 { color: var(--dusk); }
@@ -134,7 +134,7 @@ a:hover .go i { transform: translateX(3px); }
 .note-sec .lab-n { font: 600 13px/18px var(--font-body); color: var(--dusk); }
 .note-sec h2 { font-size: 20px; line-height: 28px; }
 .note-sec p { color: var(--ink); font-size: 18px; line-height: 29px; }
-.grew { padding: 20px 22px; border-radius: 24px; background: var(--dusk-tint); display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.grew { padding: 20px 22px; border-radius: 12px; background: var(--dusk-tint); display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
 .grew p { color: var(--ink); }
 .essay-link { display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 6px 0 18px; border-radius: var(--radius-pill); background: var(--dusk); color: var(--on-dusk); font: 600 14px/20px var(--font-body); text-decoration: none; border: 0; cursor: pointer; }
 .essay-link i { width: 32px; height: 32px; border-radius: var(--radius-pill); background: var(--paper); color: var(--dusk); display: grid; place-items: center; font-style: normal; }
