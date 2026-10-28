@@ -104,7 +104,7 @@ p b { color: var(--ink); font-weight: 500; }
 
 /* Figure 1: how a save flows through Wanta.
    Geometry: both core visuals are exactly 96px tall, so the inner wire sits at 47px; outer wires are centred on the board row. */
-.fig { margin-top: var(--space-16); }
+.fig { margin: var(--space-16) 0 0; }
 .fig-board { border-radius: var(--radius-l); padding: 32px 28px; background-color: var(--surface); background-image: radial-gradient(circle, var(--line) 1.2px, transparent 1.4px); background-size: 20px 20px; display: grid; grid-template-columns: 104px minmax(40px, 1fr) 368px minmax(40px, 1fr) 176px; align-items: start; }
 .fig-label { display: block; font: 600 13px/18px var(--font-body); color: var(--ink-muted); margin-bottom: 10px; }
 .fig-col { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
