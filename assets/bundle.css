@@ -80,6 +80,7 @@ body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(
 .wn-glyph { display: block; width: var(--glyph-size); height: var(--glyph-size); border-radius: var(--radius-m); background: var(--dusk-print); flex: none; }
 
 /* ---------- FeatureRow ---------- */
+.wn-feature-art { display: block; width: var(--glyph-size); height: var(--glyph-size); border-radius: var(--radius-m); }
 .wn-feature { display: grid; grid-template-columns: var(--glyph-size) minmax(0, 1fr); gap: var(--space-8); align-items: start; max-width: 800px; }
 .wn-feature h3 { margin: 0 0 var(--space-2); font: 500 18px/26px var(--font-display); letter-spacing: -.005em; color: var(--ink); text-wrap: balance; }
 .wn-feature p { margin: 0; font: 400 17px/27px var(--font-body); color: var(--ink-muted); max-width: var(--text-max); }

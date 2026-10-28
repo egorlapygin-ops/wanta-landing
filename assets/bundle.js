@@ -261,7 +261,9 @@
   /* ---------------- FeatureRow ---------------- */
   function FeatureRow(props) {
     return h("div", { className: "wn-feature" },
-      h(Glyph, { kind: props.glyph, seed: props.seed }),
+      props.illustration
+        ? h("img", { className: "wn-feature-art", src: props.illustration, alt: "", width: 128, height: 128, loading: "lazy", decoding: "async" })
+        : h(Glyph, { kind: props.glyph, seed: props.seed }),
       h("div", { style: { minWidth: 0 } }, h("h3", null, props.title), h("p", null, props.children)));
   }
 

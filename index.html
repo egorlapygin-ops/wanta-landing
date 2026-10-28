@@ -379,9 +379,9 @@ footer small { font: 500 13px/18px var(--font-body); color: var(--ink-faint); }
         h("div", { className: "sources" }, h("span", { className: "wn-label" }, "Из"),
           ["Instagram", "TikTok", "YouTube", "Pinterest", "VK"].map(function (n) { return h("span", { key: n, className: "src" }, n); }))),
       h("div", { className: "wn-features" },
-        h(W.FeatureRow, { glyph: "save", title: "Достаём то, ради чего сохранили" }, "Wanta разбирает ролик по кадрам, подписи и голосу и находит в нём объект: место, вещь, рецепт или фильм."),
-        h(W.FeatureRow, { glyph: "near", title: "Возвращаем, когда пора решать" }, "Не в ленте, а в момент выбора: вечер пятницы рядом с баром, выходные с рецептом, распродажа нужной вещи."),
-        h(W.FeatureRow, { glyph: "act", title: "Оставляем один шаг" }, "Маршрут, бронь, покупка или плеер. Этот шаг делаешь ты сам или поручаешь своему ИИ-агенту.")),
+        h(W.FeatureRow, { illustration: "assets/feature-extract.svg", title: "Достаём то, ради чего сохранили" }, "Wanta разбирает ролик по кадрам, подписи и голосу и находит в нём объект: место, вещь, рецепт или фильм."),
+        h(W.FeatureRow, { illustration: "assets/feature-remind.svg", title: "Возвращаем, когда пора решать" }, "Не в ленте, а в момент выбора: вечер пятницы рядом с баром, выходные с рецептом, распродажа нужной вещи."),
+        h(W.FeatureRow, { illustration: "assets/feature-act.svg", title: "Оставляем один шаг" }, "Нашли вещь — осталось купить по готовой ссылке на маркетплейсе. Этот шаг делаешь ты сам или поручаешь своему ИИ-агенту.")),
       h(Intent),
       h(Figure));
   }

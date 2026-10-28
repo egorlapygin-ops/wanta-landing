@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192" fill="none">
+  <rect width="192" height="192" rx="16" fill="#3A2BD8"/>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <path d="m24 72 44-14 50 17 47-14v87l-47 14-50-17-44 14Z" fill="#3022B7" stroke="#A39DFF" stroke-width="2"/>
+    <path d="M68 59v86m50-70v87M25 102l43-13 50 17 46-14M25 132l43-14 50 17 46-14m-119-53 8 26-8 28 8 29m91-75-9 27 9 26-8 29" stroke="#7569E9" stroke-width="1.6"/>
+    <path d="m43 138 27-9c11-4 12-18 22-22l20-8" stroke="#fff" stroke-width="2.5" stroke-dasharray="3 6"/>
+    <circle cx="43" cy="138" r="4" fill="#fff"/>
+    <path d="M127 107v-13" stroke="#fff" stroke-width="2.4"/>
+    <ellipse cx="127" cy="111" rx="10" ry="4" stroke="#A39DFF" stroke-width="1.6"/>
+    <circle cx="127" cy="84" r="12" fill="#F1654C"/>
+    <circle cx="127" cy="84" r="4" fill="#fff"/>
+    <g transform="rotate(-6 100 49)">
+      <rect x="34" y="25" width="132" height="49" rx="11" fill="#fff"/>
+      <circle cx="56" cy="49" r="12" fill="#EFEDFF" stroke="#3A2BD8" stroke-width="1.8"/>
+      <path d="M56 42v8l5 3" stroke="#3A2BD8" stroke-width="2"/>
+      <text x="78" y="46" fill="#3A2BD8" font-family="Arial, sans-serif" font-size="14" font-weight="700">18:30</text>
+      <path d="M79 57h51" stroke="#8C81E9" stroke-width="2.4"/>
+      <path d="m144 43 5 5-5 5" stroke="#3A2BD8" stroke-width="2"/>
+    </g>
+  </g>
+</svg>
