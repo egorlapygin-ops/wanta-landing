@@ -4,10 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>Главная Wanta</title>
+<title>Wanta — из сохранёнок в действия</title>
+<meta name="description" content="Wanta превращает сохранёнки из соцсетей в действия. Перешлите ролик боту с рецептами в Telegram — получите ингредиенты, шаги и список покупок.">
+<meta property="og:title" content="Wanta — из сохранёнок в действия">
+<meta property="og:description" content="Сохранёнки из соцсетей становятся действиями: вашими собственными или вашего ИИ-агента.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Wanta">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Golos+Text:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/bundle.css">
+<link rel="stylesheet" href="assets/recipe-illustration.css">
 <link rel="alternate" type="text/markdown" href="index.md" title="Эта страница в Markdown">
 <link rel="alternate" type="text/plain" href="llms.txt" title="LLMs.txt">
 <style>
@@ -36,10 +43,36 @@ p { font-size: 17px; line-height: 27px; color: var(--ink-muted); margin: 0; }
 p b { color: var(--ink); font-weight: 500; }
 .stack { display: flex; flex-direction: column; }
 .hero { gap: var(--space-6); align-items: flex-start; }
-.slogan { display: inline-flex; align-items: center; gap: 10px; font: 500 15px/20px var(--font-display); color: var(--dusk); }
-.slogan::before { content: ""; width: 8px; height: 8px; border-radius: var(--radius-pill); background: var(--coral); }
 .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2); }
 .hero-plate { margin-top: var(--space-6); width: 100%; }
+.try-recipe { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); align-items: center; gap: 32px; margin-top: 24px; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-l); background: var(--paper); }
+.try-recipe-intro h2 { font-size: 26px; line-height: 34px; }
+.try-recipe-intro p { margin-top: 12px; font-size: 15px; line-height: 24px; }
+.try-recipe-demo { min-width: 0; }
+.try-recipe-reel { display: flex; align-items: center; gap: 14px; width: fit-content; max-width: 100%; color: var(--ink); text-decoration: none; }
+.try-recipe-play { display: grid; place-items: center; flex: none; width: 50px; height: 56px; border-radius: 9px; background: var(--dusk-print); color: var(--print-white); transform: rotate(-5deg); }
+.try-recipe-reel strong { display: block; font: 500 15px/22px var(--font-body); }
+.try-recipe-source { display: block; margin-top: 3px; color: var(--ink-muted); font: 400 12px/18px var(--font-body); }
+.try-recipe-reel:hover .try-recipe-source { color: var(--dusk); }
+.try-recipe-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.try-recipe-copy, .try-recipe-open { display: inline-flex; flex: 1 1 auto; align-items: center; justify-content: center; gap: 10px; min-height: 46px; box-sizing: border-box; padding: 11px 14px; border: 1px solid var(--line); border-radius: var(--radius-pill); cursor: pointer; font: 500 13px/20px var(--font-body); text-decoration: none; white-space: nowrap; }
+.try-recipe-copy { background: var(--paper); color: var(--ink); }
+.try-recipe-copy:hover, .try-recipe-copy[data-copied="true"] { border-color: var(--dusk); color: var(--dusk); }
+.try-recipe-copy svg { flex: none; }
+.try-recipe-open { border-color: transparent; background: var(--dusk); color: var(--on-dusk); }
+.try-recipe-open:hover { filter: brightness(1.08); }
+.try-recipe-reel:focus-visible, .try-recipe-copy:focus-visible, .try-recipe-open:focus-visible, .try-recipe-manual:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+.try-recipe .try-recipe-hint { margin-top: 10px; color: var(--ink-muted); font: 400 11px/17px var(--font-body); }
+.try-recipe-manual { display: block; width: 100%; min-width: 0; box-sizing: border-box; margin-top: 12px; padding: 10px 12px; border: 1px solid var(--dusk); border-radius: 8px; background: var(--surface); color: var(--ink); font: 400 12px/18px var(--font-body); }
+@media (max-width: 850px) {
+  .try-recipe { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 24px; }
+}
+@media (max-width: 480px) {
+  .try-recipe { padding: 20px; }
+  .try-recipe-intro h2 { font-size: 24px; line-height: 30px; }
+  .try-recipe-actions { flex-direction: column; }
+  .try-recipe-copy, .try-recipe-open { width: 100%; }
+}
 .expanded { margin-top: var(--space-12); gap: var(--space-4); }
 .say { font-family: var(--font-display); font-size: 22px; line-height: 32px; letter-spacing: -.01em; color: var(--ink); margin-top: var(--space-4); max-width: 620px; text-wrap: balance; }
 .say em { font-style: normal; color: var(--dusk); }
@@ -111,8 +144,6 @@ p b { color: var(--ink); font-weight: 500; }
 .fig-actor b { display: block; font: 600 14px/18px var(--font-body); color: var(--ink); }
 .fig-actor small { display: block; font: 500 12px/16px var(--font-body); color: var(--ink-muted); }
 .fig-or { text-align: center; font: 500 12px/16px var(--font-body); color: var(--ink-faint); }
-.fig figcaption { margin-top: 12px; font: 400 15px/23px var(--font-body); color: var(--ink-muted); max-width: 760px; }
-.fig figcaption b { color: var(--ink); font-weight: 600; }
 /* Too narrow for one row: stack the board, wires turn vertical. */
 @media (max-width: 1250px) and (min-width: 1101px), (max-width: 940px) {
   .fig-board { grid-template-columns: minmax(0, 1fr); justify-items: center; padding: 28px 20px; }
@@ -137,6 +168,9 @@ p b { color: var(--ink); font-weight: 500; }
 .bot { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-6); border-radius: var(--radius-l); box-shadow: inset 0 0 0 1px var(--line); min-width: 0; }
 .bot .wn-glyph { width: 72px !important; height: 72px !important; border-radius: 8px; }
 .bot p { font-size: 15px; line-height: 23px; }
+.bot.is-live { box-shadow: inset 0 0 0 1px var(--dusk); }
+.bot-link { margin-top: auto; padding-top: var(--space-4); color: var(--dusk); font: 600 15px/22px var(--font-body); text-underline-offset: 4px; }
+.bot-link:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; border-radius: 2px; }
 .status { align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px; border-radius: var(--radius-pill); background: var(--surface); font: 600 13px/18px var(--font-body); color: var(--ink-muted); }
 .status i { width: 7px; height: 7px; border-radius: var(--radius-pill); border: 1.5px solid var(--ink-faint); box-sizing: border-box; }
 .status.is-live { background: var(--dusk-tint); color: var(--dusk); }
@@ -154,9 +188,6 @@ p b { color: var(--ink); font-weight: 500; }
 .raw { margin: 0; padding: var(--space-6); border-radius: var(--radius-l); background: var(--surface); color: var(--ink); font: 400 14px/22px ui-monospace, "SF Mono", Menlo, Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; tab-size: 2; }
 .raw-wrap { min-width: 0; }
 
-/* Closing band */
-.band { margin-top: var(--space-24); display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-8); align-items: center; padding: var(--space-8); border-radius: var(--radius-l); background: var(--surface); }
-.band .actions { margin-top: var(--space-6); }
 footer { margin-top: var(--space-16); padding-top: var(--space-6); border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); }
 footer nav { display: flex; flex-wrap: wrap; gap: 6px 20px; }
 footer a { font: 500 14px/20px var(--font-body); color: var(--ink-muted); text-decoration: none; }
@@ -165,7 +196,7 @@ footer small { font: 500 13px/18px var(--font-body); color: var(--ink-faint); }
 
 /* Narrow: nav becomes a top bar with a progress line and a drawer */
 .topbar { display: none; }
-.drawer { position: fixed; inset: 0; z-index: 20; background: var(--paper); overflow-y: auto; padding-top: env(safe-area-inset-top, 0px); }
+.drawer { position: fixed; inset: 0; z-index: 20; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; border: 0; box-sizing: border-box; padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px); background: var(--paper); color: var(--ink); overflow-y: auto; }
 .drawer-close { position: absolute; top: calc(16px + env(safe-area-inset-top, 0px)); right: 16px; }
 .menu-btn { height: 40px; padding: 0 16px; border-radius: var(--radius-pill); border: 0; background: var(--surface); color: var(--ink); font: 600 14px/20px var(--font-body); cursor: pointer; }
 .menu-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
@@ -176,6 +207,7 @@ footer small { font: 500 13px/18px var(--font-body); color: var(--ink-faint); }
   .topbar-progress { position: absolute; left: 0; bottom: -1px; height: 2px; background: var(--dusk); transition: width .3s; }
   .topbar-here { flex: 1; min-width: 0; text-align: center; font: 500 14px/20px var(--font-body); color: var(--ink-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   main { padding-block: var(--space-8) var(--space-12); }
+  section { scroll-margin-top: 88px; }
   .bots { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 560px) { .topbar .wn-format, .topbar-here { display: none; } }
@@ -185,7 +217,6 @@ footer small { font: 500 13px/18px var(--font-body); color: var(--ink-faint); }
   h2 { font-size: 24px; line-height: 32px; }
   .lead { font-size: 18px; line-height: 28px; }
   section { padding-top: var(--space-16); }
-  .band { grid-template-columns: minmax(0, 1fr); padding: var(--space-6); }
   .intent dl { grid-template-columns: minmax(0, 1fr); gap: 2px; }
   .intent dd { margin-bottom: 8px; }
 }
@@ -197,14 +228,19 @@ footer small { font: 500 13px/18px var(--font-body); color: var(--ink-faint); }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
 <script src="assets/bundle.js"></script>
+<script src="assets/site.js"></script>
+<script src="assets/recipe-illustration.js"></script>
 <script>
 (function () {
   var W = window.Wanta, h = React.createElement, useState = React.useState, useEffect = React.useEffect;
-  var ITEMS = [{ id: "home", label: "Главная", href: "./" }, { id: "product", label: "Продукт" }, { id: "lab", label: "Лаборатория", href: "lab/" }, { id: "memo", label: "Инвестмемо" }];
+  var ITEMS = [{ id: "home", label: "Главная", href: "./" }, { id: "product", label: "Продукт", href: "#what" }];
+  var BOT_URL = "https://t.me/Wanta_recipes_bot";
+  // Public recipe reel used in wanta-recipes/docs/VALIDATION.md integration checks.
+  var DEMO_REEL_URL = "https://www.instagram.com/reel/DYkirOriMqI/";
   var TOC = [
     { id: "mission", label: "Миссия" }, { id: "what", label: "Что мы делаем" }, { id: "production", label: "Уже работает" }
   ];
-  var PROMPT = "Прочитай https://wanta.app/llms.txt и расскажи, что такое Wanta и как она может превращать мои сохранёнки из соцсетей в действия.";
+  var PROMPT = "Прочитай " + new URL("llms.txt", location.href).href + " и расскажи, что такое Wanta и как она может превращать мои сохранёнки из соцсетей в действия.";
   var AGENT_APPS = [
     { label: "ChatGPT", href: "https://chatgpt.com/?q=" + encodeURIComponent(PROMPT) },
     { label: "Claude", href: "https://claude.ai/new?q=" + encodeURIComponent(PROMPT) }
@@ -255,17 +291,15 @@ footer small { font: 500 13px/18px var(--font-body); color: var(--ink-faint); }
   function Mission() {
     return h("section", { id: "mission", className: "col" },
       h("div", { className: "stack hero" },
-        h(W.Announce, { actionLabel: "Открыть", href: "#production" }, "Telegram-бот уже работает"),
+        h(W.Announce, { actionLabel: "Открыть", href: BOT_URL }, "Бот с рецептами уже работает"),
         h("h1", null, "Мы хотим, чтобы сохранённое переставало быть архивом и становилось действием"),
-        h("span", { className: "slogan" }, "Сохранил — значит сделаешь"),
         h("p", { className: "lead text" }, "Wanta превращает твои сохранёнки в действия: твои собственные или твоего ИИ-агента."),
         h("div", { className: "actions" },
-          h(W.Button, { variant: "primary", href: "#production" }, "Открыть бота в Telegram"),
-          h(W.Button, { variant: "secondary", href: "#", external: true }, "Инвестмемо")),
+          h(W.Button, { variant: "primary", href: BOT_URL }, "Открыть бота с рецептами")),
         h("div", { className: "agent-prompt" },
           h(W.CopyField, { label: "Скопировать промпт для агента", value: PROMPT, doneLabel: "Промпт скопирован", menu: AGENT_APPS, menuTitle: "Открыть с промптом" })),
-        h("div", { className: "hero-plate" },
-          h(W.Plate, { seed: 14, patches: 9, caption: ["Каждая точка — сохранёнка", "которая дождалась своего вечера"] }))),
+        h("div", { className: "hero-plate" }, h(WantaRecipeIllustration))),
+      h(WantaSite.TryRecipe, { reelUrl: DEMO_REEL_URL, botUrl: BOT_URL }),
       h("div", { className: "stack expanded text" },
         h("p", null, "Каждый день люди сохраняют сотни вещей, которые хотят попробовать, купить, посмотреть и посетить. Почти всё это так и остаётся в бесконечной ленте сохранёнок."),
         h("p", null, "Wanta возвращает этим желаниям жизнь. Мы достаём из каждого ролика то, ради чего его сохранили: ", h("b", null, "место, вещь, рецепт или фильм"), ". Потом возвращаем это в момент, когда пора решать, и делаем так, чтобы до действия оставался один шаг. Этот шаг можешь сделать ты сам или твой ИИ-агент."),
@@ -334,8 +368,7 @@ footer small { font: 500 13px/18px var(--font-body); color: var(--ink-faint); }
           h("div", { className: "fig-actors" },
             h("div", { className: "fig-actor" }, h("span", { className: "ic" }, h(Icon, { kind: "me" })), h("div", null, h("b", null, "Ты"), h("small", null, "пуш и один тап"))),
             h("span", { className: "fig-or" }, "или"),
-            h("div", { className: "fig-actor is-agent" }, h("span", { className: "ic" }, h(Icon, { kind: "agent" })), h("div", null, h("b", null, "ИИ-агент"), h("small", null, "бронирует и покупает")))))),
-      h("figcaption", null, h("b", null, "Рисунок 1. "), "Сохранёнка входит в Wanta: распознаём объект, собираем намерение с контекстом и возвращаем его в момент решения — тебе или твоему ИИ-агенту."));
+            h("div", { className: "fig-actor is-agent" }, h("span", { className: "ic" }, h(Icon, { kind: "agent" })), h("div", null, h("b", null, "ИИ-агент"), h("small", null, "бронирует и покупает")))))));
   }
 
   function What() {
@@ -354,45 +387,48 @@ footer small { font: 500 13px/18px var(--font-body); color: var(--ink-faint); }
   }
 
   var BOTS = [
-    { glyph: "act", title: "Товары", text: "Находит вещь из ролика и показывает, где её купить.", status: "Работает", live: true },
-    { glyph: "near", title: "Места", text: "Находит заведение, адрес и часы работы, строит маршрут.", status: "В разработке" },
-    { glyph: "save", title: "Рецепты", text: "Достаёт ингредиенты и шаги, собирает список покупок.", status: "В разработке" }
+    { glyph: "save", title: "Рецепты", text: "Достаёт ингредиенты и шаги, собирает список покупок.", status: "Работает", live: true, href: BOT_URL },
+    { glyph: "act", title: "Товары", text: "Находит вещь из ролика и показывает, где её купить.", status: "В разработке" },
+    { glyph: "near", title: "Места", text: "Находит заведение, адрес и часы работы, строит маршрут.", status: "В разработке" }
   ];
   function Production() {
     return h("section", { id: "production", className: "col" },
       h("div", { className: "sec-head" },
         h("span", { className: "wn-label" }, "Уже работает"),
         h("h2", null, "Telegram-бот"),
-        h("p", { className: "text" }, "Перешли боту ролик, и он вернёт то, ради чего ты его сохранил. На боте мы проверяем вертикали по очереди, прежде чем переносить их в приложение.")),
+        h("p", { className: "text" }, "Перешли боту ролик с рецептом — он достанет ингредиенты и шаги приготовления и соберёт список покупок. Боты для товаров и мест пока в разработке.")),
       h("div", { className: "bots" }, BOTS.map(function (b) {
-        return h("div", { key: b.title, className: "bot" },
+        return h("div", { key: b.title, className: "bot" + (b.live ? " is-live" : "") },
           h(W.Glyph, { kind: b.glyph, size: 72, alt: "" }),
           h("h3", null, b.title), h("p", null, b.text),
-          h("span", { className: "status" + (b.live ? " is-live" : "") }, h("i", { "aria-hidden": true }), b.status));
+          h("span", { className: "status" + (b.live ? " is-live" : "") }, h("i", { "aria-hidden": true }), b.status),
+          b.href ? h("a", { className: "bot-link", href: b.href }, "Открыть в Telegram", h("span", { "aria-hidden": true }, " ↗")) : null);
       })),
-      h("div", { className: "bot-cta" }, h(W.Button, { variant: "primary", href: "#" }, "Открыть бота в Telegram")));
-  }
-
-  function Closing() {
-    return h("div", { className: "band col" },
-      h(W.Glyph, { kind: "save", size: 128, alt: "" }),
-      h("div", { style: { minWidth: 0 } },
-        h("h2", null, "Сохранил — значит сделаешь"),
-        h("div", { className: "actions" },
-          h(W.Button, { variant: "primary", href: "#" }, "Открыть бота"),
-          h(W.Button, { variant: "secondary", href: "#", external: true }, "Исследования"))));
+      h("div", { className: "bot-cta" }, h(W.Button, { variant: "primary", href: BOT_URL }, "Открыть бота с рецептами")));
   }
 
   function Footer() {
     return h("footer", { className: "col" },
-      h(W.Wordmark, { scale: 1.25, href: "#" }),
-      h("nav", { "aria-label": "Ссылки в подвале" }, [["Продукт", "#"], ["Лаборатория", "lab/"], ["Инвестмемо", "#"], ["Конфиденциальность", "#"]].map(function (l) { return h("a", { key: l[0], href: l[1] }, l[0]); })),
+      h(W.Wordmark, { scale: 1.25, href: "./" }),
+      h("nav", { "aria-label": "Ссылки в подвале" }, [["Продукт", "#what"], ["Конфиденциальность", "#"]].map(function (l) { return h("a", { key: l[0], href: l[1] }, l[0]); })),
       h("small", null, "© 2026 Wanta"));
   }
 
   function App() {
     var st = useScrollState(), m = useState(false), menu = m[0], setMenu = m[1];
     var f = useState(location.hash === "#agent" ? "agent" : "human"), format = f[0], setFormatState = f[1];
+    useEffect(function () {
+      var frame;
+      function syncHash() {
+        setFormatState(location.hash === "#agent" ? "agent" : "human");
+        setMenu(false);
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(function () { go(location.hash.slice(1)); });
+      }
+      window.addEventListener("hashchange", syncHash);
+      syncHash();
+      return function () { window.removeEventListener("hashchange", syncHash); cancelAnimationFrame(frame); };
+    }, []);
     function setFormat(v) {
       setFormatState(v); setMenu(false);
       try { history.replaceState(null, "", v === "agent" ? "#agent" : location.pathname + location.search); } catch (e) {}
@@ -401,21 +437,19 @@ footer small { font: 500 13px/18px var(--font-body); color: var(--ink-faint); }
     var agent = format === "agent";
     var here = TOC.filter(function (t) { return t.id === st.active; })[0];
     function nav(props) {
-      return h(W.SideNav, Object.assign({ items: ITEMS, active: "home", toc: agent ? [] : TOC, activeToc: st.active, format: format, onFormat: setFormat, agentHref: "index.md", onTocClick: function (id) { setMenu(false); go(id); } }, props));
+      return h(W.SideNav, Object.assign({ items: ITEMS, homeHref: "./", active: "home", toc: agent ? [] : TOC, activeToc: st.active, format: format, onFormat: setFormat, agentHref: "index.md", onTocClick: function (id) { setMenu(false); go(id); } }, props));
     }
     return h(React.Fragment, null,
       h("div", { className: "topbar" },
-        h(W.Wordmark, { href: "#", scale: 1.25 }),
+        h(W.Wordmark, { href: "./", scale: 1.25 }),
         h(W.FormatSwitch, { value: format, onChange: setFormat, agentHref: "index.md" }),
         h("span", { className: "topbar-here" }, agent ? "Markdown для агентов" : st.collapsed && here ? here.label : ""),
-        h("button", { type: "button", className: "menu-btn", onClick: function () { setMenu(true); }, "aria-expanded": menu ? "true" : "false" }, "Меню"),
+        h("button", { type: "button", className: "menu-btn", onClick: function () { setMenu(true); }, "aria-expanded": menu ? "true" : "false", "aria-haspopup": "dialog", "aria-controls": "site-menu" }, "Меню"),
         h("span", { className: "topbar-progress", style: { width: (st.progress * 100) + "%" }, "aria-hidden": true })),
-      menu ? h("div", { className: "drawer", role: "dialog", "aria-modal": "true", "aria-label": "Меню" },
-        h("button", { type: "button", className: "menu-btn drawer-close", onClick: function () { setMenu(false); } }, "Закрыть"),
-        nav({ collapsed: false })) : null,
+      menu ? h(WantaSite.MenuDialog, { onClose: function () { setMenu(false); } }, nav({ collapsed: false })) : null,
       h("div", { className: "shell" },
         h("aside", { className: "side" }, nav({ collapsed: st.collapsed })),
-        h("main", null, agent ? h(React.Fragment, null, h(AgentView), h(Footer)) : h(React.Fragment, null, h(Mission), h(What), h(Production), h(Closing), h(Footer)))));
+        h("main", null, agent ? h(React.Fragment, null, h(AgentView), h(Footer)) : h(React.Fragment, null, h(Mission), h(What), h(Production), h(Footer)))));
   }
   ReactDOM.createRoot(document.getElementById("app")).render(h(App));
 })();

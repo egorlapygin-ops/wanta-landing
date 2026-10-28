@@ -1,5 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "cleanUrls": true
+  "cleanUrls": true,
+  "functions": {
+    "api/vkusvill-cart.mjs": { "maxDuration": 30 }
+  },
+  "redirects": [
+    { "source": "/lab", "destination": "/", "permanent": false },
+    { "source": "/lab/:path*", "destination": "/", "permanent": false }
+  ]
 }

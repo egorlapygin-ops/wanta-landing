@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Лаборатория Wanta</title>
+<meta name="description" content="Эксперименты и исследования Wanta: что проверяли, как устроены проверки и какие выводы помогают строить продукт.">
+<meta property="og:title" content="Лаборатория Wanta">
+<meta property="og:description" content="Эксперименты, лабораторные заметки и эссе о том, как мы строим Wanta.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Wanta">
+<link rel="alternate" type="text/plain" href="../llms.txt" title="LLMs.txt">
+<link rel="alternate" type="text/markdown" href="index.md" title="Лаборатория в Markdown">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Golos+Text:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="../assets/bundle.css">
@@ -160,7 +168,7 @@ footer a { font: 500 14px/20px var(--font-body); color: var(--ink-muted); text-d
 footer small { font: 500 13px/18px var(--font-body); color: var(--ink-faint); }
 
 .topbar { display: none; }
-.drawer { position: fixed; inset: 0; z-index: 20; background: var(--paper); overflow-y: auto; padding-top: env(safe-area-inset-top, 0px); }
+.drawer { position: fixed; inset: 0; z-index: 20; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; border: 0; box-sizing: border-box; padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px); background: var(--paper); color: var(--ink); overflow-y: auto; }
 .drawer-close { position: absolute; top: calc(16px + env(safe-area-inset-top, 0px)); right: 16px; }
 .menu-btn { height: 40px; padding: 0 16px; border-radius: var(--radius-pill); border: 0; background: var(--surface); color: var(--ink); font: 600 14px/20px var(--font-body); cursor: pointer; }
 @media (max-width: 1240px) { .grid, .more .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .principles, .counters { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -189,12 +197,14 @@ footer small { font: 500 13px/18px var(--font-body); color: var(--ink-faint); }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
 <script src="../assets/bundle.js"></script>
+<script src="../assets/site.js"></script>
 <script src="data.js"></script>
+<script src="markdown.js"></script>
 <script>
 (function () {
   var W = window.Wanta, L = window.LAB, h = React.createElement, useState = React.useState, useEffect = React.useEffect;
   var EXP = L.experiments.slice().sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : b.n - a.n; });
-  var ITEMS = [{ id: "home", label: "Главная", href: "../" }, { id: "product", label: "Продукт" }, { id: "lab", label: "Лаборатория", href: "./" }, { id: "memo", label: "Инвестмемо" }];
+  var ITEMS = [{ id: "home", label: "Главная", href: "../" }, { id: "product", label: "Продукт", href: "../#what" }];
   var STATUS = { running: "Идёт", confirmed: "Подтвердилась", queued: "В очереди", pending: "Ждёт решения", closed: "Закрыто", rejected: "Не подтвердилась" };
   var MONTHS = ["янв", "фев", "мар", "апр", "мая", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"];
   var MONTHS_G = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
@@ -320,17 +330,7 @@ footer small { font: 500 13px/18px var(--font-body); color: var(--ink-faint); }
   }
 
   function md(view) {
-    function exMd(e) { return ["### №" + pad(e.n) + " " + e.title, "", e.type + " · " + long(e.date) + " · " + STATUS[e.status], "", "**Вопрос.** " + e.question, "", "**Как проверяли.** " + e.method, "", "**Что получилось.** " + e.result, "", "**Во что выросло.** " + e.grew, ""].join("\n"); }
-    function esMd(e) { var o = ["## Эссе: " + e.title, "", long(e.date) + " · " + e.read + " мин", "", "> " + e.lead, ""]; e.body.forEach(function (b) { o.push(b[0] === "h" ? "### " + b[1] : b[0] === "q" ? "> " + b[1] : b[1]); o.push(""); }); return o.join("\n"); }
-    if (view && view.kind === "exp") return "# Лаборатория Wanta\n\n" + exMd(view.item);
-    if (view && view.kind === "essay") return "# Лаборатория Wanta\n\n" + esMd(view.item);
-    var o = ["# Лаборатория Wanta", "", "> Что мы проверяем, пока строим слой намерений. Каждый эксперимент: вопрос, как проверяли, что получилось и во что выросло.", "", "## Как мы ставим эксперименты", ""];
-    L.principles.forEach(function (x) { o.push("- **" + x.big + "** — " + x.text); });
-    o.push("");
-    L.essays.forEach(function (e) { o.push(esMd(e)); });
-    o.push("## Эксперименты", "");
-    EXP.forEach(function (e) { o.push(exMd(e)); });
-    return o.join("\n").trim();
+    return WantaLabMarkdown(L, view);
   }
 
   function parse() {
@@ -360,8 +360,8 @@ footer small { font: 500 13px/18px var(--font-body); color: var(--ink-faint); }
   }
 
   function Footer() {
-    return h("footer", null, h(W.Wordmark, { scale: 1.25, href: "#" }),
-      h("nav", { "aria-label": "Ссылки в подвале" }, [["Главная", "../"], ["Продукт", "#"], ["Инвестмемо", "#"], ["Конфиденциальность", "#"]].map(function (l) { return h("a", { key: l[0], href: l[1] }, l[0]); })),
+    return h("footer", null, h(W.Wordmark, { scale: 1.25, href: "../" }),
+      h("nav", { "aria-label": "Ссылки в подвале" }, [["Главная", "../"], ["Продукт", "../#what"], ["Конфиденциальность", "#"]].map(function (l) { return h("a", { key: l[0], href: l[1] }, l[0]); })),
       h("small", null, "© 2026 Wanta"));
   }
 
@@ -386,13 +386,14 @@ footer small { font: 500 13px/18px var(--font-body); color: var(--ink-faint); }
     else { toc = [{ id: "top", label: "Лаборатория" }, { id: "rules", label: "Как мы работаем" }, { id: "essays", label: "Эссе" }, { id: "experiments", label: "Эксперименты" }]; tocLabel = "На этой странице"; }
     var st = useSpy(toc.map(function (x) { return x.id; }));
     var here = toc.filter(function (x) { return x.id === st.active; })[0];
-    function nav(x) { return h(W.SideNav, Object.assign({ items: ITEMS, active: "lab", toc: toc, tocLabel: tocLabel, activeToc: st.active, format: format, onFormat: setFormat, agentHref: "#agent", onTocClick: go }, x)); }
+    function nav(x) { return h(W.SideNav, Object.assign({ items: ITEMS, homeHref: "../", active: "lab", toc: toc, tocLabel: tocLabel, activeToc: st.active, format: format, onFormat: setFormat, agentHref: "index.md", onTocClick: go }, x)); }
 
     var mdText = agent ? md(essay ? { kind: "essay", item: essay } : exp ? { kind: "exp", item: exp } : null) : "";
     var body = agent ? h("div", { className: "agent" },
         h("span", { className: "wn-label" }, "Версия для агентов"),
         h("h1", { style: { fontSize: 30, lineHeight: "38px" } }, essay ? "Это эссе в Markdown" : exp ? "Эта заметка в Markdown" : "Лаборатория в Markdown"),
         h("p", null, "Тот же текст без вёрстки, чтобы его было удобно читать ИИ-агенту."),
+        h("div", null, h(W.Button, { variant: "secondary", href: "index.md" }, "Вся лаборатория одним файлом")),
         h(W.CopyField, { label: "Скопировать Markdown", value: mdText, doneLabel: "Markdown скопирован" }),
         h("pre", { className: "raw" }, mdText))
       : essay ? h(Essay, { key: essay.id, e: essay, onBack: back, onOpen: open })
@@ -400,12 +401,11 @@ footer small { font: 500 13px/18px var(--font-body); color: var(--ink-faint); }
       : h(Index, { onOpen: open });
 
     return h(React.Fragment, null,
-      h("div", { className: "topbar" }, h(W.Wordmark, { href: "#", scale: 1.25 }),
-        h(W.FormatSwitch, { value: format, onChange: setFormat, agentHref: "#agent" }),
+      h("div", { className: "topbar" }, h(W.Wordmark, { href: "../", scale: 1.25 }),
+        h(W.FormatSwitch, { value: format, onChange: setFormat, agentHref: "index.md" }),
         h("span", { className: "topbar-here" }, agent ? "Markdown для агентов" : st.collapsed && here ? here.label : "Лаборатория"),
-        h("button", { type: "button", className: "menu-btn", onClick: function () { setMenu(true); }, "aria-expanded": menu ? "true" : "false" }, "Меню")),
-      menu ? h("div", { className: "drawer", role: "dialog", "aria-modal": "true", "aria-label": "Меню" },
-        h("button", { type: "button", className: "menu-btn drawer-close", onClick: function () { setMenu(false); } }, "Закрыть"), nav({ collapsed: false })) : null,
+        h("button", { type: "button", className: "menu-btn", onClick: function () { setMenu(true); }, "aria-expanded": menu ? "true" : "false", "aria-haspopup": "dialog", "aria-controls": "site-menu" }, "Меню")),
+      menu ? h(WantaSite.MenuDialog, { onClose: function () { setMenu(false); } }, nav({ collapsed: false })) : null,
       h("div", { className: "shell" },
         h("aside", { className: "side" }, nav({ collapsed: st.collapsed })),
         h("main", null, body, h(Footer))));
